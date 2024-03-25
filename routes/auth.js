@@ -1,5 +1,6 @@
-//JWT é um token para autenticação e troca de informações em tempo real, armazenar de forma segura e compacta obj JSON.
-// const jwt = require('jsonwebtoken');
+//JWT é token p/ autenticação e troca de info em tempo real armazenar de forma segura e compacta obj JSON.
+
+const jwt = require('jsonwebtoken');
 const config = require('../config');
 
 const { secret } = config;

@@ -1,10 +1,10 @@
-const jwt = require('jsonwebtoken');
+//JWT é um token para autenticação e troca de informações em tempo real, armazenar de forma segura e compacta obj JSON.
+// const jwt = require('jsonwebtoken');
 const config = require('../config');
 
 const { secret } = config;
 
 module.exports = (app, nextMain) => {
-
   app.post('/login', (req, resp, next) => {
     const { email, password } = req.body;
 
@@ -12,6 +12,7 @@ module.exports = (app, nextMain) => {
       return next(400);
     }
 
+    resp.sendStatus(200);
     // TODO: Authenticate the user
     // It is necessary to confirm if the email and password
     // match a user in the database

@@ -2,15 +2,15 @@
 
 ### Aprendizados da Sprint
 
-Nesta seção, liste os aprendizados da sprint.
+Aprendi a usar o Postman, Mongodb Compass, criar um usuário no banco fazer algumas autentificação
 
 ### Adicionado
 
-Nesta seção, especifique as funcionalidades que você adicionou.
+Adicionado as configurações que conectam banco e node
 
 ### Alterado
 
-Nesta seção, detalhe as alterações que você fez em funcionalidades já existentes.
+Ajustado as funções de connect, config, docker compose e auth.js de routes.
 
 ### Corrigido
 
@@ -18,7 +18,4 @@ Nesta seção, descreva os _bugs_ corrigidos.
 
 ### Removido
 
-Nesta seção, inclua as funcionalidades removidas.
-
-//git log --all --since='7 days ago' --oneline --format="* %h %s (%an) %as"
-
+Nada removido até o momento

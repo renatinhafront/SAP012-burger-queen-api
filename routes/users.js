@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const dbUsers = require('../repository/user');
+const userRepository = require('../repository/user');
 
 const {
   requireAuth,
@@ -22,10 +22,10 @@ const initAdminUser = (app, next) => {
     roles: 'admin',
   };
 
-  dbUsers.findByEmail(adminEmail)
+  userRepository.findByEmail(adminEmail)
     .then((user) => {
       if (!user) {
-        dbUsers.create(adminUser)
+        userRepository.create(adminUser)
           .then(() => {
             console.log('Usuário foi criado com sucesso!!');
           });
@@ -66,7 +66,6 @@ const initAdminUser = (app, next) => {
  */
 
 module.exports = (app, next) => {
-
   app.get('/users', requireAdmin, getUsers);
 
   app.get('/users/:uid', requireAuth, (req, resp) => {

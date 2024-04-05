@@ -4,9 +4,12 @@ const authMiddleware = require('./middleware/auth');
 const errorHandler = require('./middleware/error');
 const routes = require('./routes');
 const pkg = require('./package.json');
+const mongo = require('./connect');
 
 const { port, secret } = config;
 const app = express();
+
+mongo.connect();
 
 app.set('config', config);
 app.set('pkg', pkg);

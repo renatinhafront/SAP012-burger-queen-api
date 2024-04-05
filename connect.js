@@ -1,24 +1,17 @@
-const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 const config = require('./config');
 
 // eslint-disable-next-line no-unused-vars
 const { dbUrl } = config;
+function connect() {
+  mongoose.connection.on('connected', () => console.log('mongo connected'));
+  mongoose.connection.on('open', () => console.log('mongo open'));
+  mongoose.connection.on('disconnected', () => console.log('mongo disconnected'));
+  mongoose.connection.on('reconnected', () => console.log('mongo reconnected'));
+  mongoose.connection.on('disconnecting', () => console.log('mongo disconnecting'));
+  mongoose.connection.on('close', () => console.log('mongo close'));
 
-let db;
-async function connect() {
-  if (db) {
-    return db;
-  }
-  // TODO: Database Connection
-  const client = new MongoClient(dbUrl);
-
-  try {
-    await client.connect();
-    db = client.db('bq'); // Reemplaza <NOMBRE_DB> por el nombre del db
-    return db;
-  } catch (e) {
-    console.error(e);
-  }
+  mongoose.connect(dbUrl);
 }
-module.exports = { connect };
 
+module.exports = { connect };

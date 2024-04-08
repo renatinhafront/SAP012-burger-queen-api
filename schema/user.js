@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  roles: {
+  role: {
     type: String,
     enum: ['admin', 'user'], // para restringir as roles
     required: true,

@@ -1,8 +1,10 @@
-//JWT token autenticação e troca de info em tempo real armazenar de forma segura e compacta obj JSON.
+// JWT token autenticação e troca de info em tempo real
+// Usado para armazenar de forma segura e compacta obj JSON.
 
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const config = require('../config');
-const dbUsers = require('../repository/user');
+const { userRepository } = require('../repository');
 
 const { secret } = config;
 
@@ -15,31 +17,29 @@ module.exports = (app, nextMain) => {
     }
 
     if (!password) {
-      return resp.status(400).json({ error: 'Senha não informado' });
+      return resp.status(400).json({ error: 'Senha não informada' });
     }
 
-    // confere user existente no banco
-    const user = await dbUsers.findByEmail(email);
+    // confere email
+    const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    if (!reg.test(email)) {
+      // nao é um email valido, nao vale a pena perguntar se existe na DB
+      return resp.status(400).json({ error: 'Email invalido' });
+    }
+
+    // confere user e password existente no banco
+    const user = await userRepository.findByEmail(email);
 
     if (!user) {
-      return resp.status(404).json({ error: 'Usuario não encontrado' });
+      return resp.status(404).json({ error: 'Usuário não encontrado.' });
+    }
+    // Verifica se a senha fornecida corresponde à senha armazenada no banco de dados
+    if (!await bcrypt.compare(password, user.password)) {
+      return resp.status(403).json({ error: 'Senha incorreta.' });
     }
 
-    // confere se é user admin
-    if (user.roles !== 'admin') {
-      return resp.status(401).json({ error: 'Usuario não é admin' });
-    }
-
-    // confere password
-    // const salt =  bcrypt.genSalt(10);
-    if (!bcrypt.compareSync(password, user.password)) {
-      return resp.status(401).json({ error: 'Senha invalida' });
-    }
-
-    // const passwordHash =  bcrypt.hash(password, salt);
-
-    const token = jwt.sign({ email }, secret, { expiresIn: 300 });
-
+    // Cria o token
+    const token = jwt.sign({ uid: user._id }, secret, { expiresIn: 86400 });
     resp.status(200).json({ auth: true, token });
 
     // TODO: Authenticate the user

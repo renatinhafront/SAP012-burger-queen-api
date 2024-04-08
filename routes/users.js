@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
-const userRepository = require('../repository/user');
+const jwt = require('jsonwebtoken');
+const { userRepository } = require('../repository');
 
 const {
   requireAuth,
@@ -7,7 +8,7 @@ const {
 } = require('../middleware/auth');
 
 const {
-  getUsers,
+  getUsers, getUsersById,
 } = require('../controller/users');
 
 const initAdminUser = (app, next) => {
@@ -19,7 +20,7 @@ const initAdminUser = (app, next) => {
   const adminUser = {
     email: adminEmail,
     password: bcrypt.hashSync(adminPassword, 10),
-    roles: 'admin',
+    role: 'admin',
   };
 
   userRepository.findByEmail(adminEmail)
@@ -29,6 +30,8 @@ const initAdminUser = (app, next) => {
           .then(() => {
             console.log('Usuário foi criado com sucesso!!');
           });
+      } else {
+        console.log('O usuário ja existe!!');
       }
     });
   // TODO: Create admin user
@@ -68,14 +71,15 @@ const initAdminUser = (app, next) => {
 module.exports = (app, next) => {
   app.get('/users', requireAdmin, getUsers);
 
-  app.get('/users/:uid', requireAuth, (req, resp) => {
-  });
+  app.get('/users/:uid', requireAuth, getUsersById);
+  // TODO: Implement the route to get a user});
 
   app.post('/users', requireAdmin, (req, resp, next) => {
     // TODO: Implement the route to add new users
   });
 
   app.put('/users/:uid', requireAuth, (req, resp, next) => {
+    
   });
 
   app.delete('/users/:uid', requireAuth, (req, resp, next) => {

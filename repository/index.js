@@ -1,4 +1,4 @@
-const userRepository = require('./user');
+const userRepository = require('./reposi_user');
 const orderRepository = require('./order');
 
 module.exports = {

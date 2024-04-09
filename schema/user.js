@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'user'], // para restringir as roles
+    enum: ['admin', 'waiter', 'chef'], // para restringir as roles
     required: true,
   },
   id: {

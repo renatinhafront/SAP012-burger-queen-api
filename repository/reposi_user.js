@@ -1,12 +1,9 @@
 const { default: mongoose } = require('mongoose');
-const mongodb = require('../connect');
 const userSchema = require('../schema/user');
 
-const users = 'users';
 async function findAll() {
-  const db = await mongodb.connect();
-
-  return db.collection(users).find({}).toArray();
+  const userModel = mongoose.model('User', userSchema);
+  return userModel.find({}).select('-password');
 }
 
 async function findByID(id) {

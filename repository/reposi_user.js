@@ -21,9 +21,21 @@ async function create(user) {
   return userModel.create(user);
 }
 
+async function update(id, user) {
+  const userModel = mongoose.model('User', userSchema);
+  return userModel.findOneAndUpdate({ _id: id }, user, { new: true });
+}
+
+async function deleteUser(id) {
+  const userModel = mongoose.model('User', userSchema);
+  return userModel.findOneAndDelete({ id });
+}
+
 module.exports = {
   findAll,
   findByEmail,
   findByID,
   create,
+  update,
+  deleteUser,
 };

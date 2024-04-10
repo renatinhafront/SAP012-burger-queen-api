@@ -9,6 +9,9 @@ const {
 
 const {
   getUsers, getUsersById,
+  createUser,
+  updateUser,
+  deleteUser,
 } = require('../controller/users');
 
 const initAdminUser = (app, next) => {
@@ -30,8 +33,6 @@ const initAdminUser = (app, next) => {
           .then(() => {
             console.log('Usuário foi criado com sucesso!!');
           });
-      } else {
-        console.log('O usuário ja existe!!');
       }
     });
   // TODO: Create admin user
@@ -69,21 +70,20 @@ const initAdminUser = (app, next) => {
  */
 
 module.exports = (app, next) => {
+  // getUsers buscar por todos os usuários no banco de dados
   app.get('/users', requireAdmin, getUsers);
 
+  // getUsersById buscar por um usuário pelo ID
   app.get('/users/:uid', requireAuth, getUsersById);
-  // TODO: Implement the route to get a user});
 
-  app.post('/users', requireAdmin, (req, resp, next) => {
-    // TODO: Implement the route to add new users
-  });
+  // CreateUser criar um novo usuário
+  app.post('/users', requireAdmin, createUser);
 
-  app.put('/users/:uid', requireAuth, (req, resp, next) => {
-    
-  });
+  // updateUser atualizar um usuário
+  app.put('/users/:uid', requireAuth, updateUser);
 
-  app.delete('/users/:uid', requireAuth, (req, resp, next) => {
-  });
+  // deleteUser deletar um usuário
+  app.delete('/users/:uid', requireAuth, deleteUser);
 
   initAdminUser(app, next);
 };

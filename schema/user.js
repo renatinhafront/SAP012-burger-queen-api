@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -14,9 +15,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['admin', 'waiter', 'chef'], // para restringir as roles
     required: true,
-  },
-  id: {
-    type: Number,
   },
 });
 

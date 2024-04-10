@@ -1,21 +1,21 @@
-## <1.0.1> - <2024-04-03>
+## <1.0.2> - <2024-04-10>
 
 ### Aprendizados da Sprint
 
-Aprendi a usar o Postman, Mongodb Compass, criar um usuário no banco fazer algumas autentificação
+Aprendi sobre a estrutura do projeto desenhando o fluxo da aplicação, para entender o crud tamném desenhei o fluxo da criação do usuário, pude compreender sobre os verbos http e código de status, request e reponse, operações crud, modulos, esquemas de dados e os middleware. 
 
 ### Adicionado
 
-Adicionado as configurações que conectam banco e node
+Adicionado os schemas, arquivo repository, crud do usuário.
 
 ### Alterado
 
-Ajustado as funções de connect, config, docker compose e auth.js de routes.
+Alterado as configurações de conexão do nativo para mongoose.
 
 ### Corrigido
 
-Nesta seção, descreva os _bugs_ corrigidos.
+Corrigido os bugs na pasta node_modules.
 
 ### Removido
 
-Nada removido até o momento
+Nada removido até o momento.

@@ -58,7 +58,7 @@ describe('updateUser', () => {
 describe('deleteUser', () => {
   it('Deve retornar um erro 400 quando o ID é inválido', (done) => {
     done();
-  }); 
+  });
 
   it('Deve retornar um erro 404 quando o usuário não existe', (done) => {
     done();

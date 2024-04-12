@@ -1,35 +1,65 @@
 const jwt = require('jsonwebtoken');
+const { userRepository } = require('../repository');
 
 module.exports = (secret) => (req, resp, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    return next();
+    return next(401);
   }
 
   const [type, token] = authorization.split(' ');
+  // console.log(token);
 
   if (type.toLowerCase() !== 'bearer') {
     return next();
   }
 
-  jwt.verify(token, secret, (err, decodedToken) => {
+  jwt.verify(token, secret, async (err, decodedToken) => {
     if (err) {
+      console.error(err);
       return next(403);
     }
 
-    // TODO: Verify user identity using `decodeToken.uid`
+    // Verifica se o token foi decodificado
+    if (!decodedToken) {
+      return next(403);
+    }
+
+    // Verifica se o token tem o uid
+    if (!decodedToken.uid) {
+      return next(403);
+    }
+
+    // Consulta usuario no banco pelo id
+    const user = await userRepository.findByID(decodedToken.uid);
+
+    // Verifica se o user existe
+    if (!user) {
+      return resp.status(404).json({ error: 'Usuário não encontrado.' });
+    }
+
+    req.decodedToken = decodedToken;
+    req.role = user.role;
+
+    next();
   });
 };
 
-module.exports.isAuthenticated = (req) => (
-  // TODO: Decide based on the request information whether the user is authenticated
-  false
-);
+module.exports.isAuthenticated = (req) => {
+  // Consulta a data de expiração do token
+  const horaAtual = Math.floor(Date.now() / 1000); // em segundos
+  if (req.decodedToken.exp > horaAtual) {
+    console.log('Estou autenticando');
+    return true;
+  }
+
+  return false;
+};
 
 module.exports.isAdmin = (req) => (
-  // TODO: Decide based on the request information whether the user is an admin
-  false
+  // verifica se o role do usuario e admin
+  req.role === 'admin'
 );
 
 module.exports.requireAuth = (req, resp, next) => (

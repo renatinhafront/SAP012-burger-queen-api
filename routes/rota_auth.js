@@ -39,13 +39,9 @@ module.exports = (app, nextMain) => {
     }
 
     // Cria o token
+    // 15 segundos pra testar autenticação
     const token = jwt.sign({ uid: user._id }, secret, { expiresIn: 86400 });
     resp.status(200).json({ auth: true, token });
-
-    // TODO: Authenticate the user
-    // It is necessary to confirm if the email and password
-    // match a user in the database
-    // If they match, send an access token created with JWT
 
     next();
   });

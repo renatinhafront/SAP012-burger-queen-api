@@ -5,7 +5,7 @@ module.exports = {
     const listaUsuarios = await userRepository.findAll();
 
     resp.status(200).json(listaUsuarios);
-    // TODO: Implement the necessary function to fetch the `users` collection or table
+
     next();
   },
 

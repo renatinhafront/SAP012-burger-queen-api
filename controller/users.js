@@ -12,7 +12,7 @@ module.exports = {
   getUsersById: async (req, resp) => {
     const { uid } = req.params;
     if (!uid) {
-      return resp.status(400).json({ error: 'ID de usuário inválido' });
+      return resp.status(404).json({ error: 'ID de usuário inválido' });
     }
     const user = await userRepository.findByID(uid);
 

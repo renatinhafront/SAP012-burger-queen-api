@@ -50,10 +50,6 @@ describe('updateUser', () => {
     done();
   });
 
-  it('Deve retornar um erro 404 quando o usuário não existe', (done) => {
-    done();
-  });
-
   it('Deve retornar 200 ao atualizar o usuário', (done) => {
     done();
   });

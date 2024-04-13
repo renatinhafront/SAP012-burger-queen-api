@@ -11,6 +11,7 @@ const { secret } = config;
 module.exports = (app, nextMain) => {
   app.post('/login', async (req, resp, next) => {
     const { email, password } = req.body;
+    console.log('Estou aqui');
 
     if (!email) {
       return resp.status(400).json({ error: 'Email não informado' });

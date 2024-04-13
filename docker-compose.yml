@@ -13,32 +13,32 @@ services:
       - private
     ports:
       - 27017:27017
-  node:
-    image: node:12 # https://hub.docker.com/_/node/
-    user: node
-    working_dir: /home/node/app
-    environment:
-      NODE_ENV: production
-      PORT: 8080
-      DB_URL: mongodb://bq:secret@db:27017/bq?authSource=admin
-      JWT_SECRET: xxxxxxxx
-      ADMIN_EMAIL: admin@localhost
-      ADMIN_PASSWORD: changeme
-    volumes:
-      - ./:/home/node/app # Mount the code in the home directory of the user '_node_'
-    expose:
-      - 8080 # Our app runs on port 8080
-    ports:
-      # Map port 8080 of our container to port 80 of our
-      # machine
-      - 80:8080
-    # Reinstall dependencies and start the server
-    command: bash -c 'rm -rf node_modules && npm install && npm start'
-    depends_on:
-      - db
-    networks:
-      - public
-      - private
+  # node:
+  #   image: node:12 # https://hub.docker.com/_/node/
+  #   user: node
+  #   working_dir: /home/node/app
+  #   environment:
+  #     NODE_ENV: production
+  #     PORT: 8080
+  #     DB_URL: mongodb://bq:secret@db:27017/bq?authSource=admin
+  #     JWT_SECRET: xxxxxxxx
+  #     ADMIN_EMAIL: admin@localhost
+  #     ADMIN_PASSWORD: changeme
+  #   volumes:
+  #     - ./:/home/node/app # Mount the code in the home directory of the user '_node_'
+  #   expose:
+  #     - 8080 # Our app runs on port 8080
+  #   ports:
+  #     # Map port 8080 of our container to port 80 of our
+  #     # machine
+  #     - 80:8080
+  #   # Reinstall dependencies and start the server
+  #   command: bash -c 'rm -rf node_modules && npm install && npm start'
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - public
+  #     - private
 networks:
   public:
     internal: false

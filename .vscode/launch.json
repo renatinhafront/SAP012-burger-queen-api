@@ -7,7 +7,7 @@
         {
             "type": "node-terminal",
             "request": "launch",
-            "name": "Rodar modo debug",
+            "name": "Debug",
             "command": "npm start",
         }
     ]

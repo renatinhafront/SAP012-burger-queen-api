@@ -5,7 +5,7 @@ module.exports = (secret) => (req, resp, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    return next(401);
+    return next();
   }
 
   const [type, token] = authorization.split(' ');
@@ -48,6 +48,10 @@ module.exports = (secret) => (req, resp, next) => {
 
 module.exports.isAuthenticated = (req) => {
   // Consulta a data de expiração do token
+  if (!req.decodedToken) {
+    return false;
+  }
+
   const horaAtual = Math.floor(Date.now() / 1000); // em segundos
   if (req.decodedToken.exp > horaAtual) {
     console.log('Estou autenticando');

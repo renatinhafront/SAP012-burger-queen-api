@@ -28,7 +28,7 @@ async function update(id, user) {
 
 async function deleteUser(id) {
   const userModel = mongoose.model('User', userSchema);
-  return userModel.findOneAndDelete({ id });
+  return userModel.findOneAndDelete({ _id: id });
 }
 
 module.exports = {

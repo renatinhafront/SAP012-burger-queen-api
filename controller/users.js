@@ -1,4 +1,17 @@
+const bcrypt = require('bcrypt');
 const { userRepository } = require('../repository');
+// const { obj } = require('../schema/user');
+
+function prepUser(body) {
+  // recebe o body e vai criar um novo usuario
+  const user = {
+    email: body.email,
+    password: bcrypt.hashSync(body.password, 10),
+    role: body.role,
+  };
+
+  return user;
+}
 
 module.exports = {
   getUsers: async (req, resp, next) => {
@@ -36,7 +49,7 @@ module.exports = {
       }
 
       // Se o email não existir, criar o usuário
-      const newUser = await userRepository.create(req.body);
+      const newUser = await userRepository.create(prepUser(req.body));
 
       if (!newUser) {
         return resp.status(400).json({ error: 'Falha ao criar usuário.' });
@@ -55,7 +68,7 @@ module.exports = {
       return resp.status(400).json({ error: 'ID de usuário inválido' });
     }
 
-    const user = await userRepository.update(req.uid);
+    const user = await userRepository.update(uid, prepUser(req.body));
     return resp.status(200).json(user);
   },
 

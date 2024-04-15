@@ -11,14 +11,10 @@ const { secret } = config;
 module.exports = (app, nextMain) => {
   app.post('/login', async (req, resp, next) => {
     const { email, password } = req.body;
-    console.log('Estou aqui');
+    // console.log('Estou aqui');
 
-    if (!email) {
-      return resp.status(400).json({ error: 'Email não informado' });
-    }
-
-    if (!password) {
-      return resp.status(400).json({ error: 'Senha não informada' });
+    if (!email || !password) {
+      return resp.status(400).json({ error: 'Email ou senha não informado' });
     }
 
     // confere email
@@ -42,9 +38,7 @@ module.exports = (app, nextMain) => {
     // Cria o token
     // 15 segundos pra testar autenticação
     const token = jwt.sign({ uid: user._id }, secret, { expiresIn: 86400 });
-    resp.status(200).json({ auth: true, token });
-
-    next();
+    return resp.status(200).json({ auth: true, token });
   });
 
   return nextMain();

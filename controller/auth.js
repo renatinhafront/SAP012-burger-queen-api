@@ -15,7 +15,7 @@ module.exports = {
     const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     if (!reg.test(email)) {
       // nao é um email valido, nao vale a pena perguntar se existe na DB
-      return resp.status(400).json({ error: 'Email invalido' });
+      return resp.status(400).json({ error: 'Email inválido' });
     }
 
     // confere user e password existente no banco

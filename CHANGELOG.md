@@ -1,24 +1,21 @@
-## <1.0.1> - <2024-04-03>
+## <1.0.2> - <2024-04-10>
 
 ### Aprendizados da Sprint
 
-Nesta seção, liste os aprendizados da sprint.
+Aprendi sobre a estrutura do projeto desenhando o fluxo da aplicação, para entender o crud tamném desenhei o fluxo da criação do usuário, pude compreender sobre os verbos http e código de status, request e reponse, operações crud, modulos, esquemas de dados e os middleware. 
 
 ### Adicionado
 
-Nesta seção, especifique as funcionalidades que você adicionou.
+Adicionado os schemas, arquivo repository, crud do usuário.
 
 ### Alterado
 
-Nesta seção, detalhe as alterações que você fez em funcionalidades já existentes.
+Alterado as configurações de conexão do nativo para mongoose.
 
 ### Corrigido
 
-Nesta seção, descreva os _bugs_ corrigidos.
+Corrigido os bugs na pasta node_modules.
 
 ### Removido
 
-Nesta seção, inclua as funcionalidades removidas.
-
-//git log --all --since='7 days ago' --oneline --format="* %h %s (%an) %as"
-
+Nada removido até o momento.

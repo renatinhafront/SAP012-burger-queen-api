@@ -71,6 +71,10 @@ module.exports = {
     }
 
     const user = await userRepository.update(uid, prepUser(req.body));
+
+    if (!user) {
+      return resp.status(404).json({ error: 'Usuário não encontrado.' });
+    }
     return resp.status(200).json(user);
   },
 

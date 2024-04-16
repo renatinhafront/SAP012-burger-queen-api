@@ -5,8 +5,8 @@ const {
   getUsers,
   getUsersById,
   createUser,
-  // updateUser,
-  // deleteUser,
+  updateUser,
+  deleteUser,
 } = require('../users');
 
 jest.mock('../../repository/reposi_user.js', () => ({
@@ -187,26 +187,93 @@ describe('createUser', () => {
   });
 });
 
-// describe('updateUser', () => {
-//   it('Deve retornar um erro 400 quando o ID é inválido', (done) => {
-//     done();
-//   });
+describe('updateUser', () => {
+  it('Deve retornar sucesso quando for alterado o user', async () => {
+    const mockUserUpdated = {
+      _id: '6619acbc13832c1f5a8f26eb',
+      email: 'admin2@localhost.com',
+      role: 'admin',
+      __v: 0,
+    };
 
-//   it('Deve retornar 200 ao atualizar o usuário', (done) => {
-//     done();
-//   });
-// });
+    userRepository.update.mockResolvedValueOnce(mockUserUpdated);
 
-// describe('deleteUser', () => {
-//   it('Deve retornar um erro 400 quando o ID é inválido', (done) => {
-//     done();
-//   });
+    req = {
+      params: { uid: '6619acbc13832c1f5a8f26eb' },
+      body: { email: 'admin2@localhost.com', role: 'admin', password: 'xxxx' },
+    };
 
-//   it('Deve retornar um erro 404 quando o usuário não existe', (done) => {
-//     done();
-//   });
+    await updateUser(req, resp);
 
-//   it('Deve retornar 200 ao deletar o usuário', (done) => {
-//     done();
-//   });
-// });
+    expect(resp.status).toHaveBeenCalledWith(200);
+    expect(resp.json).toHaveBeenCalledWith(mockUserUpdated);
+  });
+
+  it('Deve retornar erro 400 quando o ID é inválido', async () => {
+    req = {
+      params: { },
+    };
+
+    await updateUser(req, resp);
+
+    expect(resp.status).toHaveBeenCalledWith(400);
+    expect(resp.json).toHaveBeenCalledWith({ error: 'ID de usuário inválido' });
+  });
+
+  it('Deve retornar erro 404 quando o usuário não existe', async () => {
+    userRepository.update.mockResolvedValueOnce(null);
+
+    req = {
+      params: { uid: '6619acbc13832c1f5a8f26eb' },
+      body: { email: 'admin2@localhost.com', role: 'admin', password: 'xxxx' },
+    };
+
+    await updateUser(req, resp);
+
+    expect(resp.status).toHaveBeenCalledWith(404);
+    expect(resp.json).toHaveBeenCalledWith({ error: 'Usuário não encontrado.' });
+  });
+});
+
+describe('deleteUser', () => {
+  it('Deve retornar 200 ao deletar o usuário', async () => {
+    const mockUserDelete = {
+      _id: '6619acbc13832c1f5a8f26eb',
+    };
+
+    userRepository.deleteUser.mockResolvedValueOnce(mockUserDelete);
+
+    req = {
+      params: { uid: '619acbc13832c1f5a8f26eb' },
+    };
+
+    await deleteUser(req, resp);
+
+    expect(resp.status).toHaveBeenCalledWith(200);
+    expect(resp.json).toHaveBeenCalledWith(mockUserDelete);
+  });
+
+  it('Deve retornar um erro 400 quando o ID é inválido', async () => {
+    req = {
+      params: { },
+    };
+
+    await deleteUser(req, resp);
+
+    expect(resp.status).toHaveBeenCalledWith(400);
+    expect(resp.json).toHaveBeenCalledWith({ error: 'ID de usuário inválido' });
+  });
+
+  it('Deve retornar um erro 404 quando o usuário não existe', async () => {
+    userRepository.deleteUser.mockResolvedValueOnce(null);
+
+    req = {
+      params: { uid: '619acbc13832c1f5a8f26eb' },
+    };
+
+    await deleteUser(req, resp);
+
+    expect(resp.status).toHaveBeenCalledWith(404);
+    expect(resp.json).toHaveBeenCalledWith({ error: 'Usuário não encontrado.' });
+  });
+});

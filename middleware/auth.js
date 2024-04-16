@@ -54,7 +54,7 @@ module.exports.isAuthenticated = (req) => {
 
   const horaAtual = Math.floor(Date.now() / 1000); // em segundos
   if (req.decodedToken.exp > horaAtual) {
-    console.log('Estou autenticando');
+    console.info('Estou autenticando');
     return true;
   }
 

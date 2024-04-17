@@ -1,20 +1,20 @@
-## <1.0.2> - <2024-04-10>
+## <1.0.3> - <2024-04-17>
 
 ### Aprendizados da Sprint
 
-Aprendi sobre a estrutura do projeto desenhando o fluxo da aplicação, para entender o crud tamném desenhei o fluxo da criação do usuário, pude compreender sobre os verbos http e código de status, request e reponse, operações crud, modulos, esquemas de dados e os middleware. 
+Aprendi sobre como implementar o mock para o meu projeto
 
 ### Adicionado
 
-Adicionado os schemas, arquivo repository, crud do usuário.
+Adicionado os testes de user e auth, deploy para o vercel.
 
 ### Alterado
 
-Alterado as configurações de conexão do nativo para mongoose.
+Alterado algumas tratativas de erro, a adicionado algumas verificações que eu senti necessidade na hora dos testes
 
 ### Corrigido
 
-Corrigido os bugs na pasta node_modules.
+Corrigido os bugs na pasta node_modules. Está semana tive problema outra vez.
 
 ### Removido
 

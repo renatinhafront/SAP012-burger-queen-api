@@ -30,7 +30,7 @@ const initAdminUser = (app, next) => {
       if (!user) {
         userRepository.create(adminUser)
           .then(() => {
-            console.log('Usuário foi criado com sucesso!!');
+            console.info('Usuário foi criado com sucesso!!');
           });
       }
     });

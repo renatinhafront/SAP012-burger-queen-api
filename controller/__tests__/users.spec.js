@@ -43,6 +43,20 @@ describe('getUsers', () => {
     // Verificar se a resposta contém a lista de usuários
     expect(resp.json).toHaveBeenCalledWith(mockUsers);
   });
+
+  it('Retornar erro em caso de erro interno', async () => {
+    userRepository.findByEmail.mockResolvedValueOnce(null);
+    userRepository.create.mockRejectedValueOnce(new Error('Erro interno no servidor'));
+
+    req = {
+      body: { email: 'admin@localhost.com', role: 'admin', password: 'xxxx' },
+    };
+
+    await createUser(req, resp);
+
+    expect(resp.status).toHaveBeenCalledWith(500);
+    expect(resp.json).toHaveBeenCalledWith({ error: 'Ocorreu um erro ao processar a requisição.' });
+  });
 });
 
 describe('getUsersById', () => {
@@ -93,6 +107,20 @@ describe('getUsersById', () => {
 
     expect(resp.status).toHaveBeenCalledWith(404);
     expect(resp.json).toHaveBeenCalledWith({ error: 'Usuário não encontrado.' });
+  });
+
+  it('Retornar erro em caso de erro interno', async () => {
+    userRepository.findByEmail.mockResolvedValueOnce(null);
+    userRepository.create.mockRejectedValueOnce(new Error('Erro interno no servidor'));
+
+    req = {
+      body: { email: 'admin@localhost.com', role: 'admin', password: 'xxxx' },
+    };
+
+    await createUser(req, resp);
+
+    expect(resp.status).toHaveBeenCalledWith(500);
+    expect(resp.json).toHaveBeenCalledWith({ error: 'Ocorreu um erro ao processar a requisição.' });
   });
 });
 
@@ -232,6 +260,20 @@ describe('updateUser', () => {
     expect(resp.status).toHaveBeenCalledWith(404);
     expect(resp.json).toHaveBeenCalledWith({ error: 'Usuário não encontrado.' });
   });
+
+  it('Retornar erro em caso de erro interno', async () => {
+    userRepository.findByEmail.mockResolvedValueOnce(null);
+    userRepository.create.mockRejectedValueOnce(new Error('Erro interno no servidor'));
+
+    req = {
+      body: { email: 'admin@localhost.com', role: 'admin', password: 'xxxx' },
+    };
+
+    await createUser(req, resp);
+
+    expect(resp.status).toHaveBeenCalledWith(500);
+    expect(resp.json).toHaveBeenCalledWith({ error: 'Ocorreu um erro ao processar a requisição.' });
+  });
 });
 
 describe('deleteUser', () => {
@@ -274,5 +316,19 @@ describe('deleteUser', () => {
 
     expect(resp.status).toHaveBeenCalledWith(404);
     expect(resp.json).toHaveBeenCalledWith({ error: 'Usuário não encontrado.' });
+  });
+
+  it('Retornar erro em caso de erro interno', async () => {
+    userRepository.findByEmail.mockResolvedValueOnce(null);
+    userRepository.create.mockRejectedValueOnce(new Error('Erro interno no servidor'));
+
+    req = {
+      body: { email: 'admin@localhost.com', role: 'admin', password: 'xxxx' },
+    };
+
+    await createUser(req, resp);
+
+    expect(resp.status).toHaveBeenCalledWith(500);
+    expect(resp.json).toHaveBeenCalledWith({ error: 'Ocorreu um erro ao processar a requisição.' });
   });
 });

@@ -15,23 +15,33 @@ function prepUser(body) {
 
 module.exports = {
   getUsers: async (req, resp) => {
-    const listaUsuarios = await userRepository.findAll();
+    try {
+      const listaUsuarios = await userRepository.findAll();
 
-    return resp.status(200).json(listaUsuarios);
+      return resp.status(200).json(listaUsuarios);
+    } catch (error) {
+      console.error(error);
+      return resp.status(500).json({ error: 'Ocorreu um erro ao processar a requisição.' });
+    }
   },
 
   getUsersById: async (req, resp) => {
-    const { uid } = req.params;
-    if (!uid) {
-      return resp.status(404).json({ error: 'ID de usuário inválido' });
-    }
-    const user = await userRepository.findByID(uid);
+    try {
+      const { uid } = req.params;
+      if (!uid) {
+        return resp.status(404).json({ error: 'ID de usuário inválido' });
+      }
+      const user = await userRepository.findByID(uid);
 
-    if (!user) {
-      return resp.status(404).json({ error: 'Usuário não encontrado.' });
-    }
+      if (!user) {
+        return resp.status(404).json({ error: 'Usuário não encontrado.' });
+      }
 
-    return resp.status(200).json(user);
+      return resp.status(200).json(user);
+    } catch (error) {
+      console.error(error);
+      return resp.status(500).json({ error: 'Ocorreu um erro ao processar a requisição.' });
+    }
   },
 
   createUser: async (req, resp) => {

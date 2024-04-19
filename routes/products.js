@@ -3,21 +3,24 @@ const {
   requireAdmin,
 } = require('../middleware/auth');
 
-module.exports = (app, nextMain) => {
-  app.get('/products', requireAuth, (req, resp, next) => {
-  });
+const {
+  getProducts,
+  getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} = require('../controller/products');
 
-  app.get('/products/:productId', requireAuth, (req, resp, next) => {
-  });
+module.exports = (app, next) => {
+  app.get('/products', requireAuth, getProducts);
 
-  app.post('/products', requireAdmin, (req, resp, next) => {
-  });
+  app.get('/products/:productId', requireAuth, getProductById);
 
-  app.put('/products/:productId', requireAdmin, (req, resp, next) => {
-  });
+  app.post('/products', requireAdmin, createProduct);
 
-  app.delete('/products/:productId', requireAdmin, (req, resp, next) => {
-  });
+  app.put('/products/:productId', requireAdmin, updateProduct);
 
-  nextMain();
+  app.delete('/products/:productId', requireAdmin, deleteProduct);
+
+  next();
 };

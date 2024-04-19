@@ -6,6 +6,10 @@ const orderSchema = new mongoose.Schema({
   id: {
     type: Number,
   },
+  seq: {
+    type: Number,
+    default: 0,
+  },
   userId: {
     type: Number,
     required: true,
@@ -22,11 +26,11 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  dataEntry: {
+  dateEntry: {
     type: Date,
     required: true,
   },
-  dataProcessed: {
+  dateProcessed: {
     type: Date,
     required: true,
   },

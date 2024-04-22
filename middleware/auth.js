@@ -3,14 +3,12 @@ const { userRepository } = require('../repository');
 
 module.exports = (secret) => (req, resp, next) => {
   const { authorization } = req.headers;
-
   if (!authorization) {
     return next();
   }
 
   const [type, token] = authorization.split(' ');
   // console.log(token);
-
   if (type.toLowerCase() !== 'bearer') {
     return next();
   }
@@ -33,7 +31,6 @@ module.exports = (secret) => (req, resp, next) => {
 
     // Consulta usuario no banco pelo id
     const user = await userRepository.findByID(decodedToken.uid);
-
     // Verifica se o user existe
     if (!user) {
       return resp.status(404).json({ error: 'Usuário não encontrado.' });

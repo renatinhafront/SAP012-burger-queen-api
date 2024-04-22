@@ -1,8 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const mongoose = require('mongoose');
+const autoIncrement = require('mongoose-sequence')(mongoose);
 
 const productSchema = new mongoose.Schema({
-  id: {
+  _id: {
     type: Number,
   },
   name: {
@@ -15,20 +16,30 @@ const productSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
   },
   type: {
     type: String,
     required: true,
   },
-  dataEntry: {
+  dateEntry: {
     type: Date,
-    required: true,
   },
   category: {
     type: String,
     required: true,
   },
+}, { _id: false });
+
+productSchema.pre('save', (next) => {
+  this.dateEntry = Date.now();
+  console.info(`Product saved ${Date.now()}`);
+  next();
+});
+
+productSchema.plugin(autoIncrement, {
+  id: 'Product',
+  inc_field: '_id',
+  start_seq: 1,
 });
 
 module.exports = productSchema;

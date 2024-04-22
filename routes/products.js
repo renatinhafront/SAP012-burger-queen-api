@@ -1,23 +1,30 @@
+const { param } = require('express-validator');
+
 const {
   requireAuth,
   requireAdmin,
 } = require('../middleware/auth');
 
-module.exports = (app, nextMain) => {
-  app.get('/products', requireAuth, (req, resp, next) => {
-  });
+const {
+  getProducts,
+  getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} = require('../controller/products');
 
-  app.get('/products/:productId', requireAuth, (req, resp, next) => {
-  });
+const checkProductId = param('productId').exists().toInt();
 
-  app.post('/products', requireAdmin, (req, resp, next) => {
-  });
+module.exports = (app, next) => {
+  app.get('/products', requireAuth, getProducts);
 
-  app.put('/products/:productId', requireAdmin, (req, resp, next) => {
-  });
+  app.get('/products/:productId', requireAuth, checkProductId, getProductById);
 
-  app.delete('/products/:productId', requireAdmin, (req, resp, next) => {
-  });
+  app.post('/products', requireAdmin, createProduct);
 
-  nextMain();
+  app.put('/products/:productId', requireAdmin, checkProductId, updateProduct);
+
+  app.delete('/products/:productId', requireAdmin, checkProductId, deleteProduct);
+
+  next();
 };

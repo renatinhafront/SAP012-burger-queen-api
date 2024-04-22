@@ -20,7 +20,6 @@ module.exports = {
 
     // confere user e password existente no banco
     const user = await userRepository.findByEmail(email);
-
     if (!user) {
       return resp.status(404).json({ error: 'Usuário não encontrado.' });
     }

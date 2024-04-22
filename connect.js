@@ -3,7 +3,7 @@ const config = require('./config');
 
 // eslint-disable-next-line no-unused-vars
 const { dbUrl } = config;
-function connect() {
+async function connect() {
   mongoose.connection.on('connected', () => console.info('Mongo connected'));
   mongoose.connection.on('open', () => console.info('Mongo open'));
   mongoose.connection.on('disconnected', () => console.info('Mongo disconnected'));

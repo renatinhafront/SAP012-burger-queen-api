@@ -1,6 +1,30 @@
 const { orderRepository, productRepository } = require('../repository');
 
 module.exports = {
+  createOrder: async (req, resp) => {
+    try {
+      if (!req.body || !req.body.products || !Array.isArray(req.body.products)) {
+        return resp.status(400).json({ error: 'Dados de entrada inválidos.' });
+      }
+      // Verifica se todos os produtos estão disponíveis
+      // eslint-disable-next-line no-restricted-syntax
+      for (const productOrder of req.body.products) {
+        // eslint-disable-next-line no-await-in-loop
+        const prod = await productRepository.findByID(productOrder.product.id);
+        if (!prod) {
+          console.info(`Produto ${productOrder.product.id} não encontrado.`);
+          return resp.status(404).json({ error: `Produto ${productOrder.product.id} não encontrado.` });
+        }
+      }
+      // Cria o pedido
+      const order = await orderRepository.create(req.body);
+      return resp.status(201).json(order);
+    } catch (error) {
+      console.error(error);
+      return resp.status(500).json({ error: 'Ocorreu um erro ao processar a requisição.' });
+    }
+  },
+
   getOrders: async (req, resp) => {
     try {
       const listaOrder = await orderRepository.findAll();
@@ -24,29 +48,6 @@ module.exports = {
       }
 
       return resp.status(200).json(order);
-    } catch (error) {
-      console.error(error);
-      return resp.status(500).json({ error: 'Ocorreu um erro ao processar a requisição.' });
-    }
-  },
-  createOrder: async (req, resp) => {
-    try {
-      if (!req.body || !req.body.products || !Array.isArray(req.body.products)) {
-        return resp.status(400).json({ error: 'Dados de entrada inválidos.' });
-      }
-      // Verifica se todos os produtos estão disponíveis
-      // eslint-disable-next-line no-restricted-syntax
-      for (const productOrder of req.body.products) {
-        // eslint-disable-next-line no-await-in-loop
-        const prod = await productRepository.findByID(productOrder.product.id);
-        if (!prod) {
-          console.info(`Produto ${productOrder.product.id} não encontrado.`);
-          return resp.status(404).json({ error: `Produto ${productOrder.product.id} não encontrado.` });
-        }
-      }
-      // Cria o pedido
-      const order = await orderRepository.create(req.body);
-      return resp.status(201).json(order);
     } catch (error) {
       console.error(error);
       return resp.status(500).json({ error: 'Ocorreu um erro ao processar a requisição.' });

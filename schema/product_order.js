@@ -10,6 +10,6 @@ const productOrderSchema = new mongoose.Schema({
     type: productSchema,
     required: true,
   },
-});
+}, { _id: false });
 
 module.exports = productOrderSchema;

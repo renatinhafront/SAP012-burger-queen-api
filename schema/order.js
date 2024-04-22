@@ -1,14 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const mongoose = require('mongoose');
+const autoIncrement = require('mongoose-sequence')(mongoose);
 const productOrder = require('./product_order');
 
 const orderSchema = new mongoose.Schema({
-  id: {
+  _id: {
     type: Number,
-  },
-  seq: {
-    type: Number,
-    default: 0,
   },
   userId: {
     type: Number,
@@ -34,6 +31,12 @@ const orderSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+}, { _id: false });
+
+orderSchema.plugin(autoIncrement, {
+  id: 'Order',
+  inc_field: '_id',
+  start_seq: 1,
 });
 
 module.exports = orderSchema;

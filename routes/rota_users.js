@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const { param } = require('express-validator');
 const { userRepository } = require('../repository');
 
 const {
@@ -38,21 +39,22 @@ const initAdminUser = (app, next) => {
   next();
 };
 
+const checkUserId = param('uid').exists().toInt();
 module.exports = (app, next) => {
   // getUsers buscar por todos os usuários no banco de dados
   app.get('/users', requireAdmin, getUsers);
 
   // getUsersById buscar por um usuário pelo ID
-  app.get('/users/:uid', requireAuth, getUsersById);
+  app.get('/users/:uid', requireAuth, checkUserId, getUsersById);
 
   // CreateUser criar um novo usuário
   app.post('/users', requireAdmin, createUser);
 
   // updateUser atualizar um usuário
-  app.put('/users/:uid', requireAuth, updateUser);
+  app.put('/users/:uid', requireAuth, checkUserId, updateUser);
 
   // deleteUser deletar um usuário
-  app.delete('/users/:uid', requireAuth, deleteUser);
+  app.delete('/users/:uid', requireAuth, checkUserId, deleteUser);
 
   initAdminUser(app, next);
 };

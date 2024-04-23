@@ -29,35 +29,33 @@ const resp = {
 
 describe('createOrder', () => {
   it('deve criar um pedido com sucesso', async () => {
-    const mockCreateOrders = [
-      {
-        userId: 15254,
-        client: 'Carol Shaw',
-        products: [
-          {
-            qty: 5,
-            product: {
-              name: 'Ham and Cheese Sandwich',
-              price: 1000,
-              image: 'https://github.com/Laboratoria/bootcamp/tree/main/projects/04-burger-queen-api/resources/images/sandwich.jpg',
-              type: 'Breakfast',
-              dateEntry: '2022-03-05T18:14:10.000Z',
-              category: 'Padaria',
-              _id: 10,
-            },
-            _id: 5,
+    const mockCreateOrder = {
+      userId: 15254,
+      client: 'Carol Shaw',
+      products: [
+        {
+          qty: 5,
+          product: {
+            name: 'Ham and Cheese Sandwich',
+            price: 1000,
+            image: 'https://github.com/Laboratoria/bootcamp/tree/main/projects/04-burger-queen-api/resources/images/sandwich.jpg',
+            type: 'Breakfast',
+            dateEntry: '2022-03-05T18:14:10.000Z',
+            category: 'Padaria',
+            _id: 6,
           },
-        ],
-        status: 'pending',
-        dateEntry: '2022-03-05T18:14:10.000Z',
-        dateProcessed: '2022-03-05T18:14:10.000Z',
-        _id: 7,
-        __v: 0,
-      },
-    ];
+          _id: 6,
+        },
+      ],
+      status: 'pending',
+      dateEntry: '2022-03-05T18:14:10.000Z',
+      dateProcessed: '2022-03-05T18:14:10.000Z',
+      _id: 7,
+      __v: 0,
+    };
 
-    productRepository.findByID.mockResolvedValueOnce({ mockCreateOrders });
-    orderRepository.create.mockResolvedValueOnce(mockCreateOrders);
+    productRepository.findByID.mockResolvedValueOnce({ id: 11 });
+    orderRepository.create.mockResolvedValueOnce(mockCreateOrder);
 
     req = {
       body: {
@@ -67,7 +65,7 @@ describe('createOrder', () => {
           {
             qty: 5,
             product: {
-              id: 10,
+              id: 11,
             },
           },
         ],
@@ -77,18 +75,19 @@ describe('createOrder', () => {
     await createOrder(req, resp);
 
     expect(resp.status).toHaveBeenCalledWith(201);
-    expect(resp.json).toHaveBeenCalledWith(mockCreateOrders);
+    expect(resp.json).toHaveBeenCalledWith(mockCreateOrder);
   });
 
   it('deve retornar dados de entrada invalídos quando body vazio', async () => {
-    // eslint-disable-next-line no-unused-expressions
     req = {
       body: {},
     };
+
     await createOrder(req, resp);
     expect(resp.status).toHaveBeenCalledWith(400);
     expect(resp.json).toHaveBeenCalledWith({ error: 'Dados de entrada inválidos.' });
   });
+
   it('deve retornar dados de entrada invalídos quando body.prodcuts vazio', async () => {
     req = {
       body: {
@@ -96,6 +95,7 @@ describe('createOrder', () => {
         client: 'Carol Shaw',
       },
     };
+
     await createOrder(req, resp);
     expect(resp.status).toHaveBeenCalledWith(400);
     expect(resp.json).toHaveBeenCalledWith({ error: 'Dados de entrada inválidos.' });
@@ -109,13 +109,14 @@ describe('createOrder', () => {
         products: {},
       },
     };
+
     await createOrder(req, resp);
     expect(resp.status).toHaveBeenCalledWith(400);
     expect(resp.json).toHaveBeenCalledWith({ error: 'Dados de entrada inválidos.' });
   });
 
   it('deve retornar um erro 404 se o pedido não for encontrado', async () => {
-    orderRepository.findByID.mockImplementationOnce(() => null);
+    orderRepository.findByID.mockResolvedValueOnce(null);
 
     req = {
       body: {
@@ -138,9 +139,7 @@ describe('createOrder', () => {
 
   it('deve retornar um erro 500 se ocorrer um erro inesperado', async () => {
     productRepository.findByID.mockRejectedValueOnce(new Error('Ocorreu um erro ao processar a requisição.'));
-    orderRepository.create.mockRejectedValueOnce(new Error('Ocorreu um erro ao processar a requisição.'));
 
-    // eslint-disable-next-line no-unused-expressions
     req = {
       body: {
         userId: 15254,
@@ -154,13 +153,14 @@ describe('createOrder', () => {
           },
         ],
       },
-    },
+    };
 
     await createOrder(req, resp);
     expect(resp.status).toHaveBeenCalledWith(500);
     expect(resp.json).toHaveBeenCalledWith({ error: 'Ocorreu um erro ao processar a requisição.' });
   });
 });
+
 describe('getOrders', () => {
   it('Deve obter uma lista de ordens', async () => {
     const mockOrders = [
@@ -177,9 +177,9 @@ describe('getOrders', () => {
               type: 'Breakfast',
               dateEntry: '2022-03-05T18:14:10.000Z',
               category: 'Padaria',
-              _id: '6621abcd915edebb7e7216c6',
+              _id: 10,
             },
-            _id: '6621abcd915edebb7e7216c5',
+            _id: 1,
           },
         ],
         status: 'pending',
@@ -188,7 +188,6 @@ describe('getOrders', () => {
         _id: 7,
         __v: 0,
       },
-
     ];
 
     orderRepository.findAll.mockResolvedValueOnce(mockOrders);
@@ -212,7 +211,7 @@ describe('getOrders', () => {
 });
 
 describe('getOrderById', () => {
-  it('Deve obter o usuário pelo ID', async () => {
+  it('Deve obter o pedido pelo ID', async () => {
     const mockOrderById = {
       userId: 15254,
       client: 'Carol Shaw',
@@ -240,7 +239,7 @@ describe('getOrderById', () => {
 
     orderRepository.findByID.mockResolvedValueOnce(mockOrderById);
 
-    const req = {
+    req = {
       params: { orderId: 7 },
     };
 
@@ -252,8 +251,8 @@ describe('getOrderById', () => {
   });
 
   it('Deve retornar um erro 404 quando o ID for inválido', async () => {
-    const req = {
-      params: { },
+    req = {
+      params: {},
     };
 
     await getOrderById(req, resp);

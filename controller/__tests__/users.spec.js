@@ -27,7 +27,7 @@ describe('getUsers', () => {
   it('Deve obter uma lista de usuários', async () => {
     const mockUsers = [
       {
-        _id: '6619acbc13832c1f5a8f26eb',
+        _id: 5,
         email: 'admin@localhost.com',
         role: 'admin',
         __v: 0,
@@ -63,7 +63,7 @@ describe('getUsersById', () => {
   it('Deve obter o usuário pelo ID', async () => {
     // eslint-disable-next-line operator-linebreak
     const mockUserId = {
-      _id: '6619acbc13832c1f5a8f26eb',
+      _id: 5,
       email: 'admin@localhost.com',
       role: 'admin',
       __v: 0,
@@ -72,7 +72,7 @@ describe('getUsersById', () => {
     userRepository.findByID.mockResolvedValueOnce(mockUserId);
 
     const req = {
-      params: { uid: '6619acbc13832c1f5a8f26eb' },
+      params: { id: 5 },
     };
 
     await getUsersById(req, resp);
@@ -83,24 +83,11 @@ describe('getUsersById', () => {
     expect(resp.json).toHaveBeenCalledWith(mockUserId);
   });
 
-  it('Deve retornar um erro 404 quando o ID for inválido', async () => {
-    const req = {
-      params: { },
-    };
-
-    await getUsersById(req, resp);
-
-    // Verificar se a resposta tem status 404
-    expect(resp.status).toHaveBeenCalledWith(404);
-    // Verificar se a resposta contém a mensagem de erro
-    expect(resp.json).toHaveBeenCalledWith({ error: 'ID de usuário inválido' });
-  });
-
   it('Deve retornar um erro 404 quando o usuário não for encontrado', async () => {
     userRepository.findByID.mockResolvedValueOnce(null);
 
     req = {
-      params: { uid: 'banana' },
+      params: { id: 5 },
     };
 
     await getUsersById(req, resp);
@@ -128,7 +115,7 @@ describe('createUser', () => {
   it('Deve criar um novo usuário', async () => {
     // Given/Arrange
     const mockUsuarioBanco = {
-      _id: '6619acbc138333c1f5a8f26eb',
+      _id: 5,
       email: 'admin@localhost.com',
       role: 'admin',
       __v: 0,
@@ -146,11 +133,7 @@ describe('createUser', () => {
 
     // Then/Assert
     expect(resp.status).toHaveBeenCalledWith(200);
-    expect(resp.json).toHaveBeenCalledWith(
-      {
-        message: 'Usuário criado com sucesso',
-      },
-    );
+    expect(resp.json).toHaveBeenCalledWith(mockUsuarioBanco);
   });
 
   it('Deve seguir as regras do regex no email', async () => {
@@ -167,7 +150,7 @@ describe('createUser', () => {
 
   it('Deve retornar quando o user ja esxistir no BD', async () => {
     const mockUserExists = {
-      _id: '6619acbc138333c1f5a8f26eb',
+      _id: 5,
       email: 'admin@localhost.com',
       role: 'admin',
       __v: 0,
@@ -217,7 +200,7 @@ describe('createUser', () => {
 describe('updateUser', () => {
   it('Deve retornar sucesso quando for alterado o user', async () => {
     const mockUserUpdated = {
-      _id: '6619acbc13832c1f5a8f26eb',
+      _id: 5,
       email: 'admin2@localhost.com',
       role: 'admin',
       __v: 0,
@@ -226,7 +209,7 @@ describe('updateUser', () => {
     userRepository.update.mockResolvedValueOnce(mockUserUpdated);
 
     req = {
-      params: { uid: '6619acbc13832c1f5a8f26eb' },
+      params: { id: 5 },
       body: { email: 'admin2@localhost.com', role: 'admin', password: 'xxxx' },
     };
 
@@ -236,22 +219,11 @@ describe('updateUser', () => {
     expect(resp.json).toHaveBeenCalledWith(mockUserUpdated);
   });
 
-  it('Deve retornar erro 400 quando o ID é inválido', async () => {
-    req = {
-      params: { },
-    };
-
-    await updateUser(req, resp);
-
-    expect(resp.status).toHaveBeenCalledWith(400);
-    expect(resp.json).toHaveBeenCalledWith({ error: 'ID de usuário inválido' });
-  });
-
   it('Deve retornar erro 404 quando o usuário não existe', async () => {
     userRepository.update.mockResolvedValueOnce(null);
 
     req = {
-      params: { uid: '6619acbc13832c1f5a8f26eb' },
+      params: { id: 5 },
       body: { email: 'admin2@localhost.com', role: 'admin', password: 'xxxx' },
     };
 
@@ -279,37 +251,26 @@ describe('updateUser', () => {
 describe('deleteUser', () => {
   it('Deve retornar 200 ao deletar o usuário', async () => {
     const mockUserDelete = {
-      _id: '6619acbc13832c1f5a8f26eb',
+      _id: 5,
     };
 
     userRepository.deleteUser.mockResolvedValueOnce(mockUserDelete);
 
     req = {
-      params: { uid: '619acbc13832c1f5a8f26eb' },
+      params: { id: 5 },
     };
 
     await deleteUser(req, resp);
 
     expect(resp.status).toHaveBeenCalledWith(200);
-    expect(resp.json).toHaveBeenCalledWith(mockUserDelete);
-  });
-
-  it('Deve retornar um erro 400 quando o ID é inválido', async () => {
-    req = {
-      params: { },
-    };
-
-    await deleteUser(req, resp);
-
-    expect(resp.status).toHaveBeenCalledWith(400);
-    expect(resp.json).toHaveBeenCalledWith({ error: 'ID de usuário inválido' });
+    expect(resp.json).toHaveBeenCalledWith({ message: 'Usuário excluído com sucesso!' });
   });
 
   it('Deve retornar um erro 404 quando o usuário não existe', async () => {
     userRepository.deleteUser.mockResolvedValueOnce(null);
 
     req = {
-      params: { uid: '619acbc13832c1f5a8f26eb' },
+      params: { id: 5 },
     };
 
     await deleteUser(req, resp);

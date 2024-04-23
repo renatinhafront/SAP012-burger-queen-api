@@ -27,11 +27,11 @@ module.exports = {
 
   getUsersById: async (req, resp) => {
     try {
-      const { uid } = req.params;
-      if (!uid || typeof uid !== 'number') {
-        return resp.status(404).json({ error: 'ID de usuário inválido' });
-      }
-      const user = await userRepository.findByID(uid);
+      const { id } = req.params;
+      // if (!uid || typeof uid !== 'number') {
+      //   return resp.status(404).json({ error: 'ID de usuário inválido' });
+      // }
+      const user = await userRepository.findByID(id);
 
       if (!user) {
         return resp.status(404).json({ error: 'Usuário não encontrado.' });
@@ -76,12 +76,12 @@ module.exports = {
 
   updateUser: async (req, resp) => {
     try {
-      const { uid } = req.params;
-      if (!uid || typeof uid !== 'number') {
-        return resp.status(400).json({ error: 'ID de usuário inválido' });
-      }
+      const { id } = req.params;
+      // if (!uid || typeof uid !== 'number') {
+      //   return resp.status(400).json({ error: 'ID de usuário inválido' });
+      // }
 
-      const user = await userRepository.update(uid, prepUser(req.body));
+      const user = await userRepository.update(id, prepUser(req.body));
 
       if (!user) {
         return resp.status(404).json({ error: 'Usuário não encontrado.' });
@@ -95,12 +95,12 @@ module.exports = {
 
   deleteUser: async (req, resp) => {
     try {
-      const { uid } = req.params;
-      if (!uid || typeof uid !== 'number') {
-        return resp.status(400).json({ error: 'ID de usuário inválido' });
-      }
+      const { id } = req.params;
+      // if (!uid || typeof uid !== 'number') {
+      //   return resp.status(400).json({ error: 'ID de usuário inválido' });
+      // }
 
-      const user = await userRepository.deleteUser(uid);
+      const user = await userRepository.deleteUser(id);
 
       if (!user) {
         return resp.status(404).json({ error: 'Usuário não encontrado.' });

@@ -1,34 +1,6 @@
 const { productRepository } = require('../repository');
 
 module.exports = {
-  getProducts: async (req, resp) => {
-    try {
-      const listaProdutos = await productRepository.findAll();
-      return resp.status(200).json(listaProdutos);
-    } catch (error) {
-      console.error(error);
-      return resp.status(500).json({ error: 'Ocorreu um erro ao processar a requisição.' });
-    }
-  },
-
-  getProductById: async (req, resp) => {
-    try {
-      const { productId } = req.params;
-      if (!productId || typeof productId !== 'number') {
-        return resp.status(404).json({ error: 'ID de produto inválido' });
-      }
-
-      const product = await productRepository.findByID(productId);
-      if (!product) {
-        return resp.status(404).json({ error: 'Produto não encontrado.' });
-      }
-
-      return resp.status(200).json(product);
-    } catch (error) {
-      console.error(error);
-      return resp.status(500).json({ error: 'Ocorreu um erro ao processar a requisição.' });
-    }
-  },
 
   createProduct: async (req, resp) => {
     try {
@@ -44,14 +16,43 @@ module.exports = {
     }
   },
 
-  updateProduct: async (req, resp) => {
+  getProducts: async (req, resp) => {
     try {
-      const { productId } = req.params;
-      if (!productId || typeof productId !== 'number') {
-        return resp.status(400).json({ error: 'ID de produto inválido' });
+      const listaProdutos = await productRepository.findAll();
+      return resp.status(200).json(listaProdutos);
+    } catch (error) {
+      console.error(error);
+      return resp.status(500).json({ error: 'Ocorreu um erro ao processar a requisição.' });
+    }
+  },
+
+  getProductById: async (req, resp) => {
+    try {
+      const { id } = req.params;
+      // if (!id || typeof id !== 'number') {
+      //   return resp.status(404).json({ error: 'ID inválido' });
+      // }
+
+      const product = await productRepository.findByID(id);
+      if (!product) {
+        return resp.status(404).json({ error: 'Produto não encontrado.' });
       }
 
-      const product = await productRepository.update(productId, req.body);
+      return resp.status(200).json(product);
+    } catch (error) {
+      console.error(error);
+      return resp.status(500).json({ error: 'Ocorreu um erro ao processar a requisição.' });
+    }
+  },
+
+  updateProduct: async (req, resp) => {
+    try {
+      const { id } = req.params;
+      // if (!id || typeof id !== 'number') {
+      //   return resp.status(400).json({ error: 'ID inválido' });
+      // }
+
+      const product = await productRepository.update(id, req.body);
       if (!product) {
         return resp.status(404).json({ error: 'Produto não encontrado.' });
       }
@@ -65,12 +66,12 @@ module.exports = {
 
   deleteProduct: async (req, resp) => {
     try {
-      const { productId } = req.params;
-      if (!productId || typeof productId !== 'number') {
-        return resp.status(400).json({ error: 'ID de produto inválido' });
-      }
+      const { id } = req.params;
+      // if (!id || typeof id !== 'number') {
+      //   return resp.status(400).json({ error: 'ID inválido' });
+      // }
 
-      const product = await productRepository.remove(productId);
+      const product = await productRepository.remove(id);
       if (!product) {
         return resp.status(404).json({ error: 'Produto não encontrado.' });
       }

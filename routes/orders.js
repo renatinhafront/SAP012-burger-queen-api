@@ -12,18 +12,22 @@ const {
   requireAuth,
 } = require('../middleware/auth');
 
-const checkOrderId = param('orderId').exists().toInt();
+const {
+  isValid,
+} = require('../middleware/validator');
+
+const ckeckId = param('id').exists().isInt({ min: 1 }).withMessage('ID inválido');
 
 module.exports = (app, next) => {
   app.get('/orders', requireAuth, getOrders);
 
-  app.get('/orders/:orderId', requireAuth, checkOrderId, getOrderById);
+  app.get('/orders/:id', requireAuth, ckeckId, isValid, getOrderById);
 
   app.post('/orders', requireAuth, createOrder);
 
-  app.put('/orders/:orderId', requireAuth, checkOrderId, updateOrder);
+  app.put('/orders/:id', requireAuth, ckeckId, isValid, updateOrder);
 
-  app.delete('/orders/:orderId', requireAuth, checkOrderId, removeOrder);
+  app.delete('/orders/:id', requireAuth, ckeckId, isValid, removeOrder);
 
   next();
 };

@@ -1,34 +1,6 @@
 const { orderRepository, productRepository } = require('../repository');
 
 module.exports = {
-  getOrders: async (req, resp) => {
-    try {
-      const listaOrder = await orderRepository.findAll();
-      return resp.status(200).json(listaOrder);
-    } catch (error) {
-      console.error(error);
-      return resp.status(500).json({ error: 'Ocorreu um erro ao processar a requisição.' });
-    }
-  },
-
-  getOrderById: async (req, resp) => {
-    try {
-      const { orderId } = req.params;
-      if (!orderId || typeof orderId !== 'number') {
-        return resp.status(404).json({ error: 'ID inválido' });
-      }
-
-      const order = await orderRepository.findByID(orderId);
-      if (!order) {
-        return resp.status(404).json({ error: 'Pedido não encontrado.' });
-      }
-
-      return resp.status(200).json(order);
-    } catch (error) {
-      console.error(error);
-      return resp.status(500).json({ error: 'Ocorreu um erro ao processar a requisição.' });
-    }
-  },
   createOrder: async (req, resp) => {
     try {
       if (!req.body || !req.body.products || !Array.isArray(req.body.products)) {
@@ -53,14 +25,43 @@ module.exports = {
     }
   },
 
-  updateOrder: async (req, resp) => {
+  getOrders: async (req, resp) => {
     try {
-      const { orderId } = req.params;
-      if (!orderId || typeof orderId !== 'number') {
-        return resp.status(400).json({ error: 'ID inválido' });
+      const listaOrder = await orderRepository.findAll();
+      return resp.status(200).json(listaOrder);
+    } catch (error) {
+      console.error(error);
+      return resp.status(500).json({ error: 'Ocorreu um erro ao processar a requisição.' });
+    }
+  },
+
+  getOrderById: async (req, resp) => {
+    try {
+      const { id } = req.params;
+      // if (!orderId || typeof orderId !== 'number') {
+      //   return resp.status(404).json({ error: 'ID inválido' });
+      // }
+
+      const order = await orderRepository.findByID(id);
+      if (!order) {
+        return resp.status(404).json({ error: 'Pedido não encontrado.' });
       }
 
-      const order = await orderRepository.update(orderId, req.body);
+      return resp.status(200).json(order);
+    } catch (error) {
+      console.error(error);
+      return resp.status(500).json({ error: 'Ocorreu um erro ao processar a requisição.' });
+    }
+  },
+
+  updateOrder: async (req, resp) => {
+    try {
+      const { id } = req.params;
+      // if (!orderId || typeof orderId !== 'number') {
+      //   return resp.status(400).json({ error: 'ID inválido' });
+      // }
+
+      const order = await orderRepository.update(id, req.body);
       if (!order) {
         return resp.status(404).json({ error: 'Pedido não encontrado.' });
       }
@@ -74,12 +75,12 @@ module.exports = {
 
   removeOrder: async (req, resp) => {
     try {
-      const { orderId } = req.params;
-      if (!orderId || typeof orderId !== 'number') {
-        return resp.status(400).json({ error: 'ID inválido' });
-      }
+      const { id } = req.params;
+      // if (!orderId || typeof orderId !== 'number') {
+      //   return resp.status(400).json({ error: 'ID inválido' });
+      // }
 
-      const order = await orderRepository.remove(orderId);
+      const order = await orderRepository.remove(id);
       if (!order) {
         return resp.status(404).json({ error: 'Pedido não encontrado.' });
       }

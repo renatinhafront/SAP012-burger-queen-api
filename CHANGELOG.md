@@ -1,21 +1,21 @@
-## <1.0.3> - <2024-04-17>
+## <1.0.4> - <2024-04-23>
 
 ### Aprendizados da Sprint
 
-Aprendi sobre como implementar o mock para o meu projeto
+Aprendi sobre como implementar o mock, aprendi a usar e implementar o modulo.express coma intenção de reduzir condições pra teste.
 
 ### Adicionado
 
-Adicionado os testes de user e auth, deploy para o vercel.
+Adicionado os testes auth, order e products dentro da regra de ID sequencial. Refatorado o código para order e products. Adicionado módulo pra válidar modelo padrão de ID.
 
 ### Alterado
 
-Alterado algumas tratativas de erro, a adicionado algumas verificações que eu senti necessidade na hora dos testes
+Alterado todos os testes de unit de user conforme nova regra, alterado porta de leitura.
 
 ### Corrigido
 
-Corrigido os bugs na pasta node_modules. Está semana tive problema outra vez.
+Corrigido os schemas conforme futuro uso da aplicação.
 
 ### Removido
 
-Nada removido até o momento.
+Removido as funções para centralizar tudo no controller.

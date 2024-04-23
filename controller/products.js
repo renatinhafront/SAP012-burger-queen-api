@@ -28,12 +28,12 @@ module.exports = {
 
   getProductById: async (req, resp) => {
     try {
-      const { productId } = req.params;
-      if (!productId || typeof productId !== 'number') {
-        return resp.status(404).json({ error: 'ID inválido' });
-      }
+      const { id } = req.params;
+      // if (!id || typeof id !== 'number') {
+      //   return resp.status(404).json({ error: 'ID inválido' });
+      // }
 
-      const product = await productRepository.findByID(productId);
+      const product = await productRepository.findByID(id);
       if (!product) {
         return resp.status(404).json({ error: 'Produto não encontrado.' });
       }
@@ -47,12 +47,12 @@ module.exports = {
 
   updateProduct: async (req, resp) => {
     try {
-      const { productId } = req.params;
-      if (!productId || typeof productId !== 'number') {
-        return resp.status(400).json({ error: 'ID inválido' });
-      }
+      const { id } = req.params;
+      // if (!id || typeof id !== 'number') {
+      //   return resp.status(400).json({ error: 'ID inválido' });
+      // }
 
-      const product = await productRepository.update(productId, req.body);
+      const product = await productRepository.update(id, req.body);
       if (!product) {
         return resp.status(404).json({ error: 'Produto não encontrado.' });
       }
@@ -66,12 +66,12 @@ module.exports = {
 
   deleteProduct: async (req, resp) => {
     try {
-      const { productId } = req.params;
-      if (!productId || typeof productId !== 'number') {
-        return resp.status(400).json({ error: 'ID inválido' });
-      }
+      const { id } = req.params;
+      // if (!id || typeof id !== 'number') {
+      //   return resp.status(400).json({ error: 'ID inválido' });
+      // }
 
-      const product = await productRepository.remove(productId);
+      const product = await productRepository.remove(id);
       if (!product) {
         return resp.status(404).json({ error: 'Produto não encontrado.' });
       }

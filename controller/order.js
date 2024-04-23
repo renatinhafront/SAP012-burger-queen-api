@@ -37,12 +37,12 @@ module.exports = {
 
   getOrderById: async (req, resp) => {
     try {
-      const { orderId } = req.params;
-      if (!orderId || typeof orderId !== 'number') {
-        return resp.status(404).json({ error: 'ID inválido' });
-      }
+      const { id } = req.params;
+      // if (!orderId || typeof orderId !== 'number') {
+      //   return resp.status(404).json({ error: 'ID inválido' });
+      // }
 
-      const order = await orderRepository.findByID(orderId);
+      const order = await orderRepository.findByID(id);
       if (!order) {
         return resp.status(404).json({ error: 'Pedido não encontrado.' });
       }
@@ -56,12 +56,12 @@ module.exports = {
 
   updateOrder: async (req, resp) => {
     try {
-      const { orderId } = req.params;
-      if (!orderId || typeof orderId !== 'number') {
-        return resp.status(400).json({ error: 'ID inválido' });
-      }
+      const { id } = req.params;
+      // if (!orderId || typeof orderId !== 'number') {
+      //   return resp.status(400).json({ error: 'ID inválido' });
+      // }
 
-      const order = await orderRepository.update(orderId, req.body);
+      const order = await orderRepository.update(id, req.body);
       if (!order) {
         return resp.status(404).json({ error: 'Pedido não encontrado.' });
       }
@@ -75,12 +75,12 @@ module.exports = {
 
   removeOrder: async (req, resp) => {
     try {
-      const { orderId } = req.params;
-      if (!orderId || typeof orderId !== 'number') {
-        return resp.status(400).json({ error: 'ID inválido' });
-      }
+      const { id } = req.params;
+      // if (!orderId || typeof orderId !== 'number') {
+      //   return resp.status(400).json({ error: 'ID inválido' });
+      // }
 
-      const order = await orderRepository.remove(orderId);
+      const order = await orderRepository.remove(id);
       if (!order) {
         return resp.status(404).json({ error: 'Pedido não encontrado.' });
       }

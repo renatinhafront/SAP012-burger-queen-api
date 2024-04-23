@@ -240,7 +240,7 @@ describe('getOrderById', () => {
     orderRepository.findByID.mockResolvedValueOnce(mockOrderById);
 
     req = {
-      params: { orderId: 7 },
+      params: { id: 7 },
     };
 
     await getOrderById(req, resp);
@@ -250,23 +250,11 @@ describe('getOrderById', () => {
     expect(resp.json).toHaveBeenCalledWith(mockOrderById);
   });
 
-  it('Deve retornar um erro 404 quando o ID for inválido', async () => {
-    req = {
-      params: {},
-    };
-
-    await getOrderById(req, resp);
-
-    // Verificar se a resposta tem status 404
-    expect(resp.status).toHaveBeenCalledWith(404);
-    expect(resp.json).toHaveBeenCalledWith({ error: 'ID inválido' });
-  });
-
   it('Deve retornar um erro 404 quando o pedido não for encontrado', async () => {
     orderRepository.findByID.mockResolvedValueOnce(null);
 
     req = {
-      params: { orderId: 7 },
+      params: { id: 7 },
     };
 
     await getOrderById(req, resp);
@@ -298,7 +286,7 @@ describe('updateOrder', () => {
     orderRepository.update.mockResolvedValueOnce(mockOrderUpdated);
 
     req = {
-      params: { orderId: 6 },
+      params: { id: 6 },
     };
 
     await updateOrder(req, resp);
@@ -307,22 +295,11 @@ describe('updateOrder', () => {
     expect(resp.json).toHaveBeenCalledWith(mockOrderUpdated);
   });
 
-  it('Deve retornar erro 400 quando o ID é inválido', async () => {
-    req = {
-      params: { },
-    };
-
-    await updateOrder(req, resp);
-
-    expect(resp.status).toHaveBeenCalledWith(400);
-    expect(resp.json).toHaveBeenCalledWith({ error: 'ID inválido' });
-  });
-
   it('Deve retornar erro 404 quando o usuário não existe', async () => {
     orderRepository.update.mockResolvedValueOnce(null);
 
     req = {
-      params: { orderId: 6 },
+      params: { id: 6 },
       body: { email: 'admin2@localhost.com', role: 'admin', password: 'xxxx' },
     };
 
@@ -352,7 +329,7 @@ describe('removeOrder', () => {
     orderRepository.remove.mockResolvedValueOnce({ message: 'Pedido removido com sucesso.' });
 
     req = {
-      params: { orderId: 6 },
+      params: { id: 6 },
     };
 
     await removeOrder(req, resp);
@@ -361,22 +338,11 @@ describe('removeOrder', () => {
     expect(resp.json).toHaveBeenCalledWith({ message: 'Pedido removido com sucesso.' });
   });
 
-  it('Deve retornar um erro 400 quando o ID for inválido', async () => {
-    req = {
-      params: { },
-    };
-
-    await removeOrder(req, resp);
-
-    expect(resp.status).toHaveBeenCalledWith(400);
-    expect(resp.json).toHaveBeenCalledWith({ error: 'ID inválido' });
-  });
-
   it('Deve retornar um erro 404 quando o pedido não for encontrado', async () => {
     orderRepository.remove.mockResolvedValueOnce(null);
 
     req = {
-      params: { orderId: 6 },
+      params: { id: 6 },
     };
 
     await removeOrder(req, resp);
@@ -389,7 +355,7 @@ describe('removeOrder', () => {
     orderRepository.remove.mockRejectedValueOnce(new Error('Ocorreu um erro ao processar a requisição.'));
 
     req = {
-      params: { orderId: 6 },
+      params: { id: 6 },
     };
 
     await removeOrder(req, resp);

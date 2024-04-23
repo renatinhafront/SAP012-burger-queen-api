@@ -115,29 +115,17 @@ describe('getProductById', () => {
     productRepository.findByID.mockResolvedValueOnce(mockProductById);
 
     req = {
-      params: { productId: 1 },
+      params: { id: 1 },
     };
     await getProductById(req, resp);
     expect(resp.status).toHaveBeenCalledWith(200);
     expect(resp.json).toHaveBeenCalledWith(mockProductById);
   });
 
-  it('Deve retornar um erro 404 quando o ID for inválido', async () => {
-    const req = {
-      params: {},
-    };
-
-    await getProductById(req, resp);
-
-    // Verificar se a resposta tem status 404
-    expect(resp.status).toHaveBeenCalledWith(404);
-    expect(resp.json).toHaveBeenCalledWith({ error: 'ID inválido' });
-  });
-
   it('Deve retornar um erro 404 quando o produto não for encontrado', async () => {
     productRepository.findByID.mockResolvedValueOnce(null);
     req = {
-      params: { productId: 6 },
+      params: { id: 6 },
     };
     await getProductById(req, resp);
     expect(resp.status).toHaveBeenCalledWith(404);
@@ -147,7 +135,7 @@ describe('getProductById', () => {
   it('Retornar erro 500 em caso de erro interno', async () => {
     productRepository.findByID.mockRejectedValueOnce(new Error('Ocorreu um erro ao processar a requisição.'));
     req = {
-      params: { productId: 6 },
+      params: { id: 6 },
     };
     await getProductById(req, resp);
     expect(resp.status).toHaveBeenCalledWith(500);
@@ -170,7 +158,7 @@ describe('updateProduct', () => {
     productRepository.update.mockResolvedValueOnce(mockProductUpdated);
 
     req = {
-      params: { productId: 1 },
+      params: { id: 1 },
       body: { email: 'admin@localhost.com', role: 'admin', password: 'xxxx' },
     };
 
@@ -180,24 +168,11 @@ describe('updateProduct', () => {
     expect(resp.json).toHaveBeenCalledWith(mockProductUpdated);
   });
 
-  it('Deve retornar erro 400 quando o ID é inválido', async () => {
-    productRepository.update.mockResolvedValueOnce(null);
-    req = {
-      params: { },
-      body: { email: 'admin@localhost.com', role: 'admin', password: 'xxxx' },
-    };
-
-    await updateProduct(req, resp);
-
-    expect(resp.status).toHaveBeenCalledWith(400);
-    expect(resp.json).toHaveBeenCalledWith({ error: 'ID inválido' });
-  });
-
   it('Deve retornar erro 404 quando o pedido não for encontrado', async () => {
     productRepository.update.mockResolvedValueOnce(null);
 
     req = {
-      params: { productId: 6 },
+      params: { id: 6 },
       body: { email: 'admin@localhost.com', role: 'admin', password: 'xxxx' },
     };
 
@@ -237,7 +212,7 @@ describe('deleteProduct', () => {
     productRepository.remove.mockResolvedValueOnce(mockProduct);
 
     req = {
-      params: { productId: 10 },
+      params: { id: 10 },
     };
 
     await deleteProduct(req, resp);
@@ -246,24 +221,11 @@ describe('deleteProduct', () => {
     expect(resp.json).toHaveBeenCalledWith({ message: 'Produto excluído com sucesso.' });
   });
 
-  it('Deve retornar um erro 400 quando o ID for inválido', async () => {
-    productRepository.remove.mockResolvedValueOnce(null);
-
-    req = {
-      params: { },
-    };
-
-    await deleteProduct(req, resp);
-
-    expect(resp.status).toHaveBeenCalledWith(400);
-    expect(resp.json).toHaveBeenCalledWith({ error: 'ID inválido' });
-  });
-
   it('Deve retornar um erro 404 quando o produto não for encontrado', async () => {
     productRepository.remove.mockResolvedValueOnce(null);
 
     req = {
-      params: { productId: 6 },
+      params: { id: 6 },
     };
 
     await deleteProduct(req, resp);
@@ -277,7 +239,7 @@ describe('deleteProduct', () => {
     productRepository.remove.mockRejectedValueOnce(mockError);
 
     req = {
-      params: { productId: 6 },
+      params: { id: 6 },
     };
 
     await deleteProduct(req, resp);

@@ -13,18 +13,22 @@ const {
   deleteProduct,
 } = require('../controller/products');
 
-const checkProductId = param('productId').exists().toInt();
+const {
+  isValid,
+} = require('../middleware/validator');
+
+const ckeckId = param('id').exists().isInt({ min: 1 }).withMessage('ID inválido');
 
 module.exports = (app, next) => {
   app.get('/products', requireAuth, getProducts);
 
-  app.get('/products/:productId', requireAuth, checkProductId, getProductById);
+  app.get('/products/:id', requireAuth, ckeckId, isValid, getProductById);
 
   app.post('/products', requireAdmin, createProduct);
 
-  app.put('/products/:productId', requireAdmin, checkProductId, updateProduct);
+  app.put('/products/:id', requireAdmin, ckeckId, isValid, updateProduct);
 
-  app.delete('/products/:productId', requireAdmin, checkProductId, deleteProduct);
+  app.delete('/products/:id', requireAdmin, ckeckId, isValid, deleteProduct);
 
   next();
 };

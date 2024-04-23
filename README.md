@@ -7,6 +7,8 @@
 <img src="https://github.com/renatinhafront/SAP012-burger-queen-api/assets/107226201/00a6fc62-991e-49f4-91ef-7fed67fdfa86" alt="ícone api" width="50" height="50" >
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="ícone javascript" >
 <img src="https://img.shields.io/badge/Jest-323330?style=for-the-badge&logo=Jest&logoColor=white" alt="ícone jest" >
+<img src="https://github.com/renatinhafront/SAP012-burger-queen-api/assets/107226201/23117ce0-cdeb-455c-a448-d115acbb5b42" alt="ícone banco de dados" width="50" height="50" >
+
 
 ## 🌱 História de usuário
 

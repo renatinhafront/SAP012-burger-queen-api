@@ -1,8 +1,14 @@
 # Burger Queen - API com Node.js
 
-## 🌱 História de usuário
+## 🌱 Tecnologias:
 
-![Node.js logo](https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg)
+<img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="ícone node.js" > <br>
+
+<img src="https://github.com/renatinhafront/SAP012-burger-queen-api/assets/107226201/00a6fc62-991e-49f4-91ef-7fed67fdfa86" alt="ícone api" width="50" height="50" >
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="ícone javascript" >
+<img src="https://img.shields.io/badge/Jest-323330?style=for-the-badge&logo=Jest&logoColor=white" alt="ícone jest" >
+
+## 🌱 História de usuário
 
 Um pequeno restaurante de hamburgueres, que está crescendo, necessita de um
 sistema para realizar pedidos usando um _tablet_, e que os enviem à
@@ -37,10 +43,3 @@ de comércio eletrônico robusta, segura e escalável.
 
 A documentação está especifica o comportamento esperado da API que
 iremos expor por HTTP.[Documentação Swaggerhub](https://app.swaggerhub.com/apis-docs/ssinuco/BurgerQueenAPI/3.0.0#/)
-
-## 🌱 Tecnologias:
-
-<img src="https://github.com/renatinhafront/SAP012-burger-queen-api/assets/107226201/00a6fc62-991e-49f4-91ef-7fed67fdfa86" alt="ícone api"  >
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="ícone javascript" >
-<img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="ícone node.js" >
-<img src="https://img.shields.io/badge/Jest-323330?style=for-the-badge&logo=Jest&logoColor=white" alt="ícone jest" >

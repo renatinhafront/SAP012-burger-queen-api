@@ -28,9 +28,6 @@ module.exports = {
   getUsersById: async (req, resp) => {
     try {
       const { id } = req.params;
-      // if (!uid || typeof uid !== 'number') {
-      //   return resp.status(404).json({ error: 'ID de usuário inválido' });
-      // }
       const user = await userRepository.findByID(id);
 
       if (!user) {
@@ -77,10 +74,6 @@ module.exports = {
   updateUser: async (req, resp) => {
     try {
       const { id } = req.params;
-      // if (!uid || typeof uid !== 'number') {
-      //   return resp.status(400).json({ error: 'ID de usuário inválido' });
-      // }
-
       const user = await userRepository.update(id, prepUser(req.body));
 
       if (!user) {
@@ -96,10 +89,6 @@ module.exports = {
   deleteUser: async (req, resp) => {
     try {
       const { id } = req.params;
-      // if (!uid || typeof uid !== 'number') {
-      //   return resp.status(400).json({ error: 'ID de usuário inválido' });
-      // }
-
       const user = await userRepository.deleteUser(id);
 
       if (!user) {

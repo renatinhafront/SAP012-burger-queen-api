@@ -549,7 +549,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'          
-  /users/{uid}:
+  /users/{id}:
     get:
       tags:
       - "users"
@@ -559,7 +559,7 @@ paths:
         - bearerAuth: []
       parameters:
       - in: "path"
-        name: "uid"
+        name: "id"
         description: "id o email de la usuaria a consultar"
         required: true
         schema:
@@ -582,7 +582,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'          
         "403":
-          description: "si el token de autenticación no es de una usuario administradora o no es de la misma usuaria que corresponde al parametro uid"
+          description: "si el token de autenticación no es de una usuario administradora o no es de la misma usuaria que corresponde al parametro id"
           content:
             application/json:
               schema:
@@ -602,7 +602,7 @@ paths:
         - bearerAuth: []
       parameters:
       - in: "path"
-        name: "uid"
+        name: "id"
         description: "id o email de la usuaria a modificar"
         required: true
         schema:
@@ -634,7 +634,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'          
         "403":
-          description: "Caso 1: si el token de autenticación no es de una usuario administradora o no es de la misma usuaria que corresponde al parametro uid. Caso 2: una usuaria no admin intenta de modificar sus `roles`"
+          description: "Caso 1: si el token de autenticación no es de una usuario administradora o no es de la misma usuaria que corresponde al parametro id. Caso 2: una usuaria no admin intenta de modificar sus `roles`"
           content:
             application/json:
               schema:
@@ -654,7 +654,7 @@ paths:
         - bearerAuth: []
       parameters:
       - in: "path"
-        name: "uid"
+        name: "id"
         description: "id o email de la usuaria a eliminar"
         required: true
         schema:
@@ -672,7 +672,7 @@ paths:
         "401":
           description: "si no hay cabecera de autenticación"
         "403":
-          description: "si el token de autenticación no es de una usuario administradora o no es de la misma usuaria que corresponde al parametro uid"
+          description: "si el token de autenticación no es de una usuario administradora o no es de la misma usuaria que corresponde al parametro id"
           content:
             application/json:
               schema:

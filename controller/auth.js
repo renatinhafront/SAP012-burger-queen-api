@@ -30,7 +30,7 @@ module.exports = {
 
     // Cria o token
     // 15 segundos pra testar autenticação
-    const token = jwt.sign({ uid: user._id }, secret, { expiresIn: 86400 });
+    const token = jwt.sign({ id: user._id }, secret, { expiresIn: 86400 });
     return resp.status(200).json({ auth: true, token });
   },
 };

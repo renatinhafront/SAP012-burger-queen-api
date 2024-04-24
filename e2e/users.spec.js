@@ -47,7 +47,7 @@ describe('GET /users', () => {
   ));
 });
 
-describe('GET /users/:uid', () => {
+describe('GET /users/:id', () => {
   it('should fail with 401 when no auth', () => (
     fetch('/users/foo@bar.baz').then((resp) => expect(resp.status).toBe(401))
   ));
@@ -160,7 +160,7 @@ describe('POST /users', () => {
   ));
 });
 
-describe('PUT /users/:uid', () => {
+describe('PUT /users/:id', () => {
   it('should fail with 401 when no auth', () => (
     fetch('/users/foo@bar.baz', { method: 'PUT' })
       .then((resp) => expect(resp.status).toBe(401))
@@ -224,7 +224,7 @@ describe('PUT /users/:uid', () => {
   ));
 });
 
-describe('DELETE /users/:uid', () => {
+describe('DELETE /users/:id', () => {
   it('should fail with 401 when no auth', () => (
     fetch('/users/foo@bar.baz', { method: 'DELETE' })
       .then((resp) => expect(resp.status).toBe(401))

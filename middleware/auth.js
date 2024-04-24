@@ -24,16 +24,16 @@ module.exports = (secret) => (req, resp, next) => {
       return next(403);
     }
 
-    // Verifica se o token tem o uid
-    if (!decodedToken.uid) {
+    // Verifica se o token tem o id
+    if (!decodedToken.id) {
       return next(403);
     }
 
     // Consulta usuario no banco pelo id
-    const user = await userRepository.findByID(decodedToken.uid);
+    const user = await userRepository.findByID(decodedToken.id);
     // Verifica se o user existe
     if (!user) {
-      return resp.status(404).json({ error: 'Usuário não encontrado.' });
+      return resp.status(404).json({ error: 'Usuário não encontrado 2.' });
     }
 
     req.decodedToken = decodedToken;

@@ -33,7 +33,7 @@ module.exports = (secret) => (req, resp, next) => {
     const user = await userRepository.findByID(decodedToken.id);
     // Verifica se o user existe
     if (!user) {
-      return resp.status(404).json({ error: 'Usuário não encontrado 2.' });
+      return resp.status(404).json({ error: 'Usuário não encontrado.' });
     }
 
     req.decodedToken = decodedToken;

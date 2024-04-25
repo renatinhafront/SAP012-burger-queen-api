@@ -1,3 +1,5 @@
+// JWT é um token de autenticação criptografado
+// Bcrypt é um algoritmo que gera senhas criptografadas
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { userRepository } = require('../repository');

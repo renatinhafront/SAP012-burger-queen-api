@@ -1,5 +1,5 @@
-const auth = require('./rota_auth');
-const users = require('./rota_users');
+const auth = require('./auth');
+const users = require('./users');
 const products = require('./products');
 const orders = require('./orders');
 

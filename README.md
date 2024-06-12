@@ -48,3 +48,6 @@ de comércio eletrônico robusta, segura e escalável.
 
 A documentação está especifica o comportamento esperado da API que
 iremos expor por HTTP.[Documentação Swaggerhub](https://app.swaggerhub.com/apis-docs/ssinuco/BurgerQueenAPI/3.0.0#/)
+
+<img width="1394" alt="image" src="https://github.com/renatinhafront/burger-queen-api/assets/107226201/19028b14-69ca-4312-b5e6-4079f3438068">
+

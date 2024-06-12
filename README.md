@@ -43,5 +43,8 @@ No geral, o projeto demonstra a aplicação eficaz de tecnologias como
 Node.js, Express.js, Git, MongoDB e outras para criar uma plataforma 
 de comércio eletrônico robusta, segura e escalável.
 
+<img width="1279" alt="image" src="https://github.com/renatinhafront/burger-queen-api/assets/107226201/6242e5d9-ad0c-4637-9c5e-7ec39b59b2f7">
+
+
 A documentação está especifica o comportamento esperado da API que
 iremos expor por HTTP.[Documentação Swaggerhub](https://app.swaggerhub.com/apis-docs/ssinuco/BurgerQueenAPI/3.0.0#/)

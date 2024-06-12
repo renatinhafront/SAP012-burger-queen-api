@@ -51,3 +51,8 @@ iremos expor por HTTP.[Documentação Swaggerhub](https://app.swaggerhub.com/api
 
 <img width="1394" alt="image" src="https://github.com/renatinhafront/burger-queen-api/assets/107226201/19028b14-69ca-4312-b5e6-4079f3438068">
 
+## Deploy
+
+<img width="816" alt="image" src="https://github.com/renatinhafront/burger-queen-api/assets/107226201/27432be0-4f68-4dcf-8d1a-9d400fd2b736">
+
+
